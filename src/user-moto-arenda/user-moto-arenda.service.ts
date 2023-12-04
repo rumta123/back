@@ -16,10 +16,14 @@ export class UserMotoArendaService {
     });
   }
 
+  async findOne(id: number): Promise<UserMotoArenda> {
+    return this.userMotoArendaRepository.findOne({ where: { id } });
+  }
 
-  // добавление в базы данных
+ 
+   // добавление в базы данных
   
-  async createUserMotoArenda(userMotoArendaData: Partial<UserMotoArenda>): Promise<UserMotoArenda> {
+   async createUserMotoArenda(userMotoArendaData: Partial<UserMotoArenda>): Promise<UserMotoArenda> {
     try {
         // Convert the partial entity to a fully defined entity
         const newUserMotoArenda = this.userMotoArendaRepository.create(userMotoArendaData);
@@ -39,43 +43,7 @@ export class UserMotoArendaService {
         throw new Error('Failed to create user moto arenda.');
     }
 }
-
-
-  
-  
-
-// В вашем UserMotoArendaService
-// async createUserMotoArenda(userMotoArendaData: Partial<UserMotoArenda>): Promise<UserMotoArenda> {
-//   const newUserMotoArenda = this.userMotoArendaRepository.create(userMotoArendaData);
-//   const createdUserMotoArenda = await this.userMotoArendaRepository.save(newUserMotoArenda);
-
-//   // Загрузите созданную сущность с отношениями, используя where
-//   const userMotoArendaWithRelations = await this.userMotoArendaRepository
-//     .createQueryBuilder('userMotoArenda')
-//     .leftJoinAndSelect('userMotoArenda.moto', 'moto')
-//     .leftJoinAndSelect('userMotoArenda.arendaStatus', 'arendaStatus')
-//     .leftJoinAndSelect('arendaStatus.user', 'user')
-//     .leftJoinAndSelect('arendaStatus.tourDate', 'tourDate')
-//     .where('userMotoArenda.id = :id', { id: createdUserMotoArenda.id })
-//     .getOne();
-
-//   return userMotoArendaWithRelations;
-// }
-
-
-
-  // async findAllDataByUserId(id: number, userId: number): Promise<UserMotoArenda[]> {
-  //   return this.userMotoArendaRepository.find({
-  //     where: { id, user: { id: userId } },
-  //     relations: ['user', 'moto'],
-  //   });
-  // }
-  async findOne(id: number): Promise<UserMotoArenda> {
-    return this.userMotoArendaRepository.findOne({ where: { id } });
-  }
-
- 
-  
+// конец
 
 
 
@@ -88,36 +56,13 @@ export class UserMotoArendaService {
       .getMany();
   }
 
-  // async getMotoById(userId: number, motoId: number): Promise<UserMotoArenda> {
-  //   return this.userMotoArendaRepository.findOne({
-  //     where: { user: { id: userId }, moto: { id: motoId } },
-  //   });
-  // }
 
-  // async getMotoById1(id: number, userId: number): Promise<UserMotoArenda[]> {
-  //   return this.userMotoArendaRepository
-  //     .createQueryBuilder('userMotoArenda')
-  //     .innerJoinAndSelect('userMotoArenda.moto', 'moto')
-  //     .where('userMotoArenda.id = :id', { id })
-  //     .andWhere('userMotoArenda.user.id = :userId', { userId })
-  //     .select([
-  //       // 'userMotoArenda.id',
-  //       // 'userMotoArenda.is_rented',
-  //       'moto.id',
-  //       'moto.equipment_name',  // Добавьте свойства, которые вы хотите включить
-  //     ])
-  //     .getMany();
-  // }
   async findAll(): Promise<UserMotoArenda[]> {
     console.log('Executing findAll method');
     return this.userMotoArendaRepository.find();
   }
 
-  // async findOne(id: number): Promise<UserMotoArenda> {
-  //   console.log(`Executing findOne method with id: ${id}`);
-  //   return this.userMotoArendaRepository.findOne({ where: { id } });
-  // }
-
+ 
   async create(userMotoArendaData: Partial<UserMotoArenda>): Promise<UserMotoArenda> {
     console.log('Executing create method');
     const newUserMotoArenda = this.userMotoArendaRepository.create(userMotoArendaData);
